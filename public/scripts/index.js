@@ -5,19 +5,21 @@ const authBarElement = document.querySelector("#authentication-bar");
 
 // Elements for sensor readings
 
-const tempElementDHT11 = document.getElementById("tempDHT11-d1");
-const humElementDHT11 = document.getElementById("humDHT11-d1");
-const tempElementDHT22 = document.getElementById("tempDHT22-d1");
-const humElementDHT22 = document.getElementById("humDHT22-d1");
-const tempElementTypeC = document.getElementById("tempK-TypeC-d1");
-const humElementTypeF = document.getElementById("tempK-TypeF-d1");
+const getElement = (id) => document.getElementById(id);
 
-const tempElementDHT11D2 = document.getElementById("tempDHT11-d2");
-const humElementDHT11D2 = document.getElementById("humDHT11-d2");
-const tempElementDHT22D2 = document.getElementById("tempDHT22-d2");
-const humElementDHT22D2 = document.getElementById("humDHT22-d2");
-const tempElementTypeCD2 = document.getElementById("tempK-TypeC-d2");
-const humElementTypeFD2 = document.getElementById("tempK-TypeF-d2");
+const tempElementDHT11 = getElement("tempDHT11-d1");
+const humElementDHT11 = getElement("humDHT11-d1");
+const tempElementDHT22 = getElement("tempDHT22-d1");
+const humElementDHT22 = getElement("humDHT22-d1");
+const tempElementTypeC = getElement("tempK-TypeC-d1");
+const humElementTypeF = getElement("tempK-TypeF-d1");
+
+const tempElementDHT11D2 = getElement("tempDHT11-d2");
+const humElementDHT11D2 = getElement("humDHT11-d2");
+const tempElementDHT22D2 = getElement("tempDHT22-d2");
+const humElementDHT22D2 = getElement("humDHT22-d2");
+const tempElementTypeCD2 = getElement("tempK-TypeC-d2");
+const humElementTypeFD2 = getElement("tempK-TypeF-d2");
 
 // MANAGE LOGIN/LOGOUT UI
 const setupUI = (user) => {
@@ -34,37 +36,39 @@ const setupUI = (user) => {
     console.log(uid);
 
     // Database paths (with user UID)
-    var dbPathHumDHT11 = 'UsersData/' + uid.toString() + '/humidityDHT11';
-    var dbPathTempDHT11 = 'UsersData/' + uid.toString() + '/temperatureDHT11';
-    var dbPathHumDHT22 = 'UsersData/' + uid.toString() + '/humidityDHT22';
-    var dbPathTempDHT22 = 'UsersData/' + uid.toString() + '/temperatureDHT22';
-    var dbPathTempKTypeC = 'UsersData/' + uid.toString() + '/degreesC';
-    var dbPathTempKTypeF = 'UsersData/' + uid.toString() + '/degreesF';
-
-    var dbPathHumDHT11D2 = 'UsersData/' + uid.toString() + '/humidityDHT11D2';
-    var dbPathTempDHT11D2 = 'UsersData/' + uid.toString() + '/temperatureDHT11D2';
-    var dbPathHumDHT22D2 = 'UsersData/' + uid.toString() + '/humidityDHT22D2';
-    var dbPathTempDHT22D2 = 'UsersData/' + uid.toString() + '/temperatureDHT22D2';
-    var dbPathTempKTypeCD2 = 'UsersData/' + uid.toString() + '/degreesCD2';
-    var dbPathTempKTypeFD2 = 'UsersData/' + uid.toString() + '/degreesFD2';
+    const dbPath = (path) => `UsersData/${uid}/${path}`;
+    const dbPathHumDHT11 = dbPath('humidityDHT11');
+    const dbPathTempDHT11 = dbPath('temperatureDHT11');
+    const dbPathHumDHT22 = dbPath('humidityDHT22');
+    const dbPathTempDHT22 = dbPath('temperatureDHT22');
+    const dbPathTempKTypeC = dbPath('degreesC');
+    const dbPathTempKTypeF = dbPath('degreesF');
+    const dbPathHumDHT11D2 = dbPath('humidityDHT11D2');
+    const dbPathTempDHT11D2 = dbPath('temperatureDHT11D2');
+    const dbPathHumDHT22D2 = dbPath('humidityDHT22D2');
+    const dbPathTempDHT22D2 = dbPath('temperatureDHT22D2');
+    const dbPathTempKTypeCD2 = dbPath('degreesCD2');
+    const dbPathTempKTypeFD2 = dbPath('degreesFD2');
 
 
 
     // Database references
 
-    var dbRefHumDHT11 = firebase.database().ref().child(dbPathHumDHT11);
-    var dbRefTempDHT11 = firebase.database().ref().child(dbPathTempDHT11);
-    var dbRefHumDHT22 = firebase.database().ref().child(dbPathHumDHT22);
-    var dbRefTempDHT22 = firebase.database().ref().child(dbPathTempDHT22);
-    var dbRefTempKTypeC = firebase.database().ref().child(dbPathTempKTypeC);
-    var dbRefTempKTypeF = firebase.database().ref().child(dbPathTempKTypeF);
+    const dbRef = (path) => firebase.database().ref().child(path);
 
-    var dbRefHumDHT11D2 = firebase.database().ref().child(dbPathHumDHT11D2);
-    var dbRefTempDHT11D2 = firebase.database().ref().child(dbPathTempDHT11D2);
-    var dbRefHumDHT22D2 = firebase.database().ref().child(dbPathHumDHT22D2);
-    var dbRefTempDHT22D2 = firebase.database().ref().child(dbPathTempDHT22D2);
-    var dbRefTempKTypeCD2 = firebase.database().ref().child(dbPathTempKTypeCD2);
-    var dbRefTempKTypeFD2 = firebase.database().ref().child(dbPathTempKTypeFD2);
+    const dbRefHumDHT11 = dbRef(dbPathHumDHT11);
+    const dbRefTempDHT11 = dbRef(dbPathTempDHT11);
+    const dbRefHumDHT22 = dbRef(dbPathHumDHT22);
+    const dbRefTempDHT22 = dbRef(dbPathTempDHT22);
+    const dbRefTempKTypeC = dbRef(dbPathTempKTypeC);
+    const dbRefTempKTypeF = dbRef(dbPathTempKTypeF);
+
+    const dbRefHumDHT11D2 = dbRef(dbPathHumDHT11D2);
+    const dbRefTempDHT11D2 = dbRef(dbPathTempDHT11D2);
+    const dbRefHumDHT22D2 = dbRef(dbPathHumDHT22D2);
+    const dbRefTempDHT22D2 = dbRef(dbPathTempDHT22D2);
+    const dbRefTempKTypeCD2 = dbRef(dbPathTempKTypeCD2);
+    const dbRefTempKTypeFD2 = dbRef(dbPathTempKTypeFD2);
 
 
 
